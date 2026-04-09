@@ -16,6 +16,9 @@ const SLIDE = {
   exit: (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
 };
 
+// Stable cinema background
+const CINEMA_BG = "https://picsum.photos/seed/cinema-noir-bg/1920/1080";
+
 export default function QuizShell() {
   const router = useRouter();
   const [step, setStep] = useState(0);
@@ -23,8 +26,11 @@ export default function QuizShell() {
   const [answers, setAnswers] = useState<PartialAnswers>({});
 
   const question = QUESTIONS[step];
-  const isLast = step === QUESTIONS.length - 1;
+  const stepNum = step + 1;
+  const totalSteps = QUESTIONS.length;
+  const isLast = step === totalSteps - 1;
   const isMulti = question.multiSelect === true;
+  const isPlatform = false;
 
   const currentValue = answers[question.id];
   const selectedValues: string[] = isMulti
@@ -41,7 +47,7 @@ export default function QuizShell() {
   function selectSingle(value: string) {
     setAnswers((prev) => ({ ...prev, [question.id]: value }));
     if (!isLast) {
-      setTimeout(() => go(1), 180);
+      setTimeout(() => go(1), 200);
     }
   }
 
@@ -56,10 +62,6 @@ export default function QuizShell() {
   }
 
   function confirm() {
-    // Q9 exclusions — empty array is valid (skip)
-    if (!(question.id in answers)) {
-      setAnswers((prev) => ({ ...prev, [question.id]: [] }));
-    }
     const final = { ...answers };
     if (!(question.id in final)) {
       (final as Record<string, unknown>)[question.id] = [];
@@ -67,18 +69,23 @@ export default function QuizShell() {
     router.push(`/results?q=${encodeURIComponent(JSON.stringify(final))}`);
   }
 
+  const curationScore = Math.round(40 + (step / totalSteps) * 55);
+
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-      {/* Header */}
-      <div className="px-6 pt-10 pb-6 max-w-lg mx-auto w-full">
-        <div className="flex items-center justify-between mb-6">
-          <span className="text-lg font-semibold tracking-tight">🎬 Movie Match</span>
-        </div>
-        <ProgressBar current={step + 1} total={QUESTIONS.length} />
+    <main className="pt-24 min-h-screen flex flex-col relative overflow-hidden">
+      {/* Fixed cinematic background */}
+      <div className="fixed inset-0 -z-10 opacity-40 pointer-events-none">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={CINEMA_BG}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 noir-gradient" />
       </div>
 
-      {/* Question */}
-      <div className="flex-1 flex flex-col justify-center px-6 max-w-lg mx-auto w-full">
+      <div className="max-w-7xl mx-auto px-6 py-12 w-full flex-grow flex flex-col">
+        {/* Question header */}
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={step}
@@ -88,53 +95,135 @@ export default function QuizShell() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.22, ease: "easeInOut" }}
-            className="w-full"
+            className="mb-12"
           >
-            <h2 className="text-2xl font-bold mb-8 leading-snug">
-              {question.question}
-            </h2>
-
-            <div className="flex flex-col gap-3">
-              {question.options.map((opt) => (
-                <OptionCard
-                  key={opt.value}
-                  option={opt}
-                  selected={selectedValues.includes(opt.value)}
-                  onClick={() =>
-                    isMulti ? toggleMulti(opt.value) : selectSingle(opt.value)
-                  }
+            <div className="flex justify-between items-start mb-4">
+              <div className="flex-1 min-w-0 mr-6">
+                <span className="text-primary font-headline font-bold text-sm tracking-widest uppercase block mb-2">
+                  Step {String(stepNum).padStart(2, "0")} / {String(totalSteps).padStart(2, "0")}
+                </span>
+                <h1
+                  className="text-4xl md:text-6xl font-headline font-extrabold tracking-tight text-on-surface"
+                  dangerouslySetInnerHTML={{ __html: question.question }}
                 />
-              ))}
-            </div>
-
-            {/* Multi-select actions */}
-            {isMulti && (
-              <div className="mt-8 flex gap-3">
-                <button
-                  onClick={confirm}
-                  className="flex-1 py-3.5 rounded-2xl bg-white text-gray-900 font-semibold hover:bg-gray-100 transition"
-                >
-                  {selectedValues.length > 0
-                    ? `Confirm (${selectedValues.length} selected)`
-                    : "Skip — no exclusions"}
-                </button>
               </div>
-            )}
+              {question.quote && (
+                <p className="hidden md:block text-right text-on-surface-variant text-sm max-w-xs italic leading-relaxed shrink-0">
+                  {question.quote}
+                </p>
+              )}
+            </div>
+            <ProgressBar current={stepNum} total={totalSteps} />
           </motion.div>
         </AnimatePresence>
+
+        {/* Options grid */}
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={step}
+            custom={direction}
+            variants={SLIDE}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            className={`grid gap-6 flex-grow mb-8 ${question.gridClass ?? "grid-cols-1 md:grid-cols-2"}`}
+          >
+            {question.options.map((opt) => (
+              <OptionCard
+                key={opt.value}
+                option={opt}
+                selected={selectedValues.includes(opt.value)}
+                isMulti={isMulti}
+                isPlatform={isPlatform}
+                onClick={() =>
+                  isMulti ? toggleMulti(opt.value) : selectSingle(opt.value)
+                }
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Footer */}
+        {isMulti ? (
+          /* Q9 multi-select footer */
+          <div className="mt-auto flex flex-col md:flex-row items-center justify-between gap-6 border-t border-outline-variant/10 pt-8">
+            <p className="text-on-surface-variant text-sm flex items-center gap-2">
+              <span className="material-symbols-outlined text-lg">info</span>
+              Selected genres will be filtered out of your curator results.
+            </p>
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <button
+                onClick={confirm}
+                className="flex-1 md:flex-none px-8 py-4 rounded-xl text-primary font-headline font-bold bg-surface-variant/20 hover:bg-surface-variant/40 transition-all border border-outline-variant/15 active:scale-95"
+              >
+                Skip
+              </button>
+              <button
+                onClick={confirm}
+                className="flex-1 md:flex-none px-12 py-4 rounded-xl text-on-primary font-headline font-bold bg-gradient-to-br from-primary to-primary-container hover:shadow-[0_0_30px_rgba(202,190,255,0.5)] transition-all active:scale-95"
+                style={{ boxShadow: "0 0 20px rgba(202,190,255,0.3)" }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        ) : (
+          /* Single-select footer */
+          <div className="flex justify-between items-center mt-auto py-8">
+            <button
+              onClick={() => go(-1)}
+              className="group flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors px-6 py-3 rounded-full hover:bg-surface-container"
+              style={{ visibility: step === 0 ? "hidden" : "visible" }}
+            >
+              <span className="material-symbols-outlined">arrow_back</span>
+              <span className="font-headline font-bold uppercase tracking-widest text-sm">
+                Go Back
+              </span>
+            </button>
+            <span className="text-on-surface-variant text-xs">
+              {isPlatform ? "Pick one to continue" : "Pick one to continue"}
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Back button */}
-      {step > 0 && (
-        <div className="px-6 pb-10 max-w-lg mx-auto w-full">
-          <button
-            onClick={() => go(-1)}
-            className="text-sm text-gray-400 hover:text-white transition flex items-center gap-1"
-          >
-            ← Go back
-          </button>
+      {/* Fixed Curation Match badge (bottom-left) */}
+      <div className="fixed bottom-6 left-6 hidden lg:flex items-center gap-4 p-4 rounded-full bg-surface-container/70 backdrop-blur-xl border border-outline-variant/15">
+        <div className="w-12 h-12 rounded-full flex items-center justify-center relative">
+          <svg className="w-full h-full -rotate-90" viewBox="0 0 48 48">
+            <circle
+              className="text-surface-container-highest"
+              cx="24"
+              cy="24"
+              r="20"
+              fill="transparent"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <circle
+              className="text-primary"
+              cx="24"
+              cy="24"
+              r="20"
+              fill="transparent"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeDasharray={`${2 * Math.PI * 20}`}
+              strokeDashoffset={`${2 * Math.PI * 20 * (1 - curationScore / 100)}`}
+            />
+          </svg>
+          <span className="absolute text-[10px] font-bold text-on-surface">
+            {curationScore}%
+          </span>
         </div>
-      )}
-    </div>
+        <div>
+          <p className="text-xs font-bold text-on-surface">Curation Match</p>
+          <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">
+            Profile Optimized
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }

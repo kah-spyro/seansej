@@ -48,15 +48,6 @@ const SETTING_DESC: Record<QuizAnswers["setting"], string> = {
   small: "laptop lub telefon, leżąc w łóżku",
 };
 
-const PLATFORM_DESC: Record<QuizAnswers["platform"], string> = {
-  netflix: "Netflix",
-  prime: "Amazon Prime Video",
-  disney: "Disney+",
-  hbo: "HBO Max",
-  apple: "Apple TV+",
-  any: "dowolna platforma, brak preferencji",
-};
-
 const EXCLUSION_LABELS: Record<
   QuizAnswers["exclusions"][number],
   string
@@ -79,7 +70,6 @@ export function buildPrompt(answers: QuizAnswers): string {
   lines.push(`- **Era:** ${ERA_DESC[answers.era]}`);
   lines.push(`- **Jakość/reputacja:** ${QUALITY_DESC[answers.quality]}`);
   lines.push(`- **Gdzie oglądam:** ${SETTING_DESC[answers.setting]}`);
-  lines.push(`- **Platforma:** ${PLATFORM_DESC[answers.platform]}`);
 
   if (answers.exclusions.length > 0) {
     const exList = answers.exclusions

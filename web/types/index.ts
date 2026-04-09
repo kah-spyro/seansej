@@ -6,7 +6,6 @@ export interface QuizAnswers {
   era: "classic" | "modern" | "recent" | "any";
   quality: "hit" | "gem" | "guilty" | "random";
   setting: "cinema" | "tv" | "small";
-  platform: "netflix" | "prime" | "disney" | "hbo" | "apple" | "any";
   exclusions: Array<
     "horror" | "romance" | "animation" | "documentary" | "scifi" | "musical"
   >;
@@ -47,12 +46,28 @@ export type ClaudeMessage = {
 export interface QuizOption {
   label: string;
   value: string;
+  /** Material Symbols icon name */
+  icon: string;
+  /** Short subtitle / description */
+  sub?: string;
+  /** Tailwind classes for card size/aspect ratio */
+  cardClass?: string;
+  /** Background image URL for cinematic card overlay */
+  bgImage?: string;
+  /** Legacy emoji — kept for profile summary labels */
   emoji?: string;
 }
 
 export interface QuizQuestion {
   id: keyof QuizAnswers;
+  /** HTML string — may contain <span> for styling */
   question: string;
+  /** Plain-text label used in profile summary */
+  label: string;
   options: QuizOption[];
   multiSelect?: boolean;
+  /** Tailwind grid classes for this question's option layout */
+  gridClass?: string;
+  /** Cinematic quote shown on the right of the header */
+  quote?: string;
 }

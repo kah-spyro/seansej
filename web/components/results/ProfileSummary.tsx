@@ -9,11 +9,11 @@ interface Props {
 
 export default function ProfileSummary({ answers }: Props) {
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
-      <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">
+    <div className="glass-card border border-outline-variant/15 rounded-2xl p-6">
+      <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-5">
         Your Movie Profile
       </h3>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-4">
         {QUESTIONS.map((q) => {
           const raw = answers[q.id];
           const values: string[] = Array.isArray(raw)
@@ -25,16 +25,16 @@ export default function ProfileSummary({ answers }: Props) {
           const labels = values
             .map((v) => {
               const opt = q.options.find((o) => o.value === v);
-              return opt ? `${opt.emoji ?? ""} ${opt.label}`.trim() : v;
+              return opt?.label ?? v;
             })
             .join(", ");
 
           return (
             <div key={q.id}>
-              <p className="text-xs text-gray-500 mb-0.5 truncate">
-                {q.question}
+              <p className="text-xs text-on-surface-variant/60 mb-0.5 truncate">
+                {q.label}
               </p>
-              <p className="text-sm text-white font-medium">
+              <p className="text-sm text-on-surface font-medium">
                 {labels || "—"}
               </p>
             </div>
