@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(echo \"exit: $?\")",
+      "WebSearch",
+      "WebFetch(domain:player.pl)",
+      "WebFetch(domain:polsatboxgo.pl)",
+      "WebFetch(domain:canalplus.pl)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:unsplash.com)"
+    ]
+  }
+}
