@@ -6,9 +6,6 @@ export interface QuizAnswers {
   era: "classic" | "modern" | "recent" | "any";
   quality: "hit" | "gem" | "guilty" | "random";
   setting: "cinema" | "tv" | "small";
-  exclusions: Array<
-    "horror" | "romance" | "animation" | "documentary" | "scifi" | "musical"
-  >;
 }
 
 export interface WatchProvider {

@@ -45,9 +45,14 @@ export default function QuizShell() {
   }
 
   function selectSingle(value: string) {
-    setAnswers((prev) => ({ ...prev, [question.id]: value }));
+    const updated = { ...answers, [question.id]: value };
+    setAnswers(updated);
     if (!isLast) {
       setTimeout(() => go(1), 200);
+    } else {
+      setTimeout(() => {
+        router.push(`/results?q=${encodeURIComponent(JSON.stringify(updated))}`);
+      }, 200);
     }
   }
 

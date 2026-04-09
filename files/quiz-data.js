@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════
-// Quiz data — 9 questions with per-question grid layouts
+// Quiz data — 8 questions with per-question grid layouts
 // Each question declares its own grid template + card sizes,
 // preserving the "editorial" feel from Stitch mockups.
 // ══════════════════════════════════════════════════════════════════════
@@ -146,22 +146,6 @@ const QUIZ = [
       { value: "hbo", title: "HBO Max", sub: "", icon: "play_circle", cardClass: "aspect-square" },
       { value: "apple", title: "Apple TV+", sub: "", icon: "play_circle", cardClass: "aspect-square" },
       { value: "any", title: "No preference", sub: "", icon: "all_inclusive", cardClass: "aspect-square" },
-    ],
-  },
-
-  // ─── Q9: GENRE EXCLUSIONS ───────────────────────────────────────────
-  {
-    id: "exclusions",
-    question: 'Anything you want to <span class="text-primary italic">avoid</span>?',
-    type: "multi", // multi-select, skippable
-    gridClass: "grid-cols-2 md:grid-cols-3 lg:grid-cols-6",
-    options: [
-      { value: "horror", title: "Horror", sub: "", icon: "dark_mode", cardClass: "aspect-square" },
-      { value: "romance", title: "Romance", sub: "", icon: "favorite", cardClass: "aspect-square" },
-      { value: "animation", title: "Animation", sub: "", icon: "animation", cardClass: "aspect-square" },
-      { value: "documentary", title: "Documentary", sub: "", icon: "videocam", cardClass: "aspect-square" },
-      { value: "scifi", title: "Sci-Fi", sub: "", icon: "rocket_launch", cardClass: "aspect-square" },
-      { value: "musical", title: "Musical", sub: "", icon: "music_note", cardClass: "aspect-square" },
     ],
   },
 ];

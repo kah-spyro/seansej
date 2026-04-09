@@ -48,18 +48,6 @@ const SETTING_DESC: Record<QuizAnswers["setting"], string> = {
   small: "laptop lub telefon, leżąc w łóżku",
 };
 
-const EXCLUSION_LABELS: Record<
-  QuizAnswers["exclusions"][number],
-  string
-> = {
-  horror: "horror",
-  romance: "romans",
-  animation: "animacja",
-  documentary: "dokumentalny",
-  scifi: "sci-fi",
-  musical: "musical",
-};
-
 export function buildPrompt(answers: QuizAnswers): string {
   const lines = ["Oto mój profil filmowy:\n"];
 
@@ -70,15 +58,6 @@ export function buildPrompt(answers: QuizAnswers): string {
   lines.push(`- **Era:** ${ERA_DESC[answers.era]}`);
   lines.push(`- **Jakość/reputacja:** ${QUALITY_DESC[answers.quality]}`);
   lines.push(`- **Gdzie oglądam:** ${SETTING_DESC[answers.setting]}`);
-
-  if (answers.exclusions.length > 0) {
-    const exList = answers.exclusions
-      .map((e) => EXCLUSION_LABELS[e])
-      .join(", ");
-    lines.push(`- **Unikam gatunków:** ${exList}`);
-  } else {
-    lines.push("- **Unikam gatunków:** brak wykluczeń");
-  }
 
   lines.push(
     "\nZnajdź mi dokładnie 3 propozycje. Pamiętaj — używaj search_movies, uzasadnienia mają być osobiste i odnosić się do mojego profilu."
