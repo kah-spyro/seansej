@@ -1,6 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { QuizOption } from "@/types";
+
+function useBgImage(bgImages?: string[]): string | undefined {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (bgImages && bgImages.length > 1) {
+      setIdx(Math.floor(Math.random() * bgImages.length));
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  return bgImages?.[idx];
+}
 
 interface Props {
   option: QuizOption;
@@ -14,6 +25,7 @@ interface Props {
 
 /** Q1–Q7: editorial card — icon in circle at top, subtitle slides up on hover */
 function EditorialCard({ option, selected, onClick }: Omit<Props, "isMulti" | "isPlatform">) {
+  const bgImage = useBgImage(option.bgImages);
   return (
     <button
       onClick={onClick}
@@ -26,11 +38,11 @@ function EditorialCard({ option, selected, onClick }: Omit<Props, "isMulti" | "i
       ].join(" ")}
     >
       {/* Background image */}
-      {option.bgImage && (
+      {bgImage && (
         <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={option.bgImage}
+            src={bgImage}
             alt=""
             className="w-full h-full object-cover"
           />
@@ -79,6 +91,7 @@ function EditorialCard({ option, selected, onClick }: Omit<Props, "isMulti" | "i
 
 /** Q9: exclusion card — bg image, icon at bottom, radio circle at top-right */
 function ExclusionCard({ option, selected, onClick }: Omit<Props, "isMulti" | "isPlatform">) {
+  const bgImage = useBgImage(option.bgImages);
   return (
     <div
       onClick={onClick}
@@ -91,11 +104,11 @@ function ExclusionCard({ option, selected, onClick }: Omit<Props, "isMulti" | "i
       style={{ minHeight: "180px" }}
     >
       {/* Background image */}
-      {option.bgImage && (
+      {bgImage && (
         <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={option.bgImage}
+            src={bgImage}
             alt=""
             className="w-full h-full object-cover grayscale"
           />

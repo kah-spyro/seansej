@@ -1,8 +1,6 @@
 import { QuizQuestion } from "@/types";
 
-// Stable Picsum seeds give consistent images per option
-const PIC = (seed: string) =>
-  `https://picsum.photos/seed/${seed}/800/600`;
+const IMG = (name: string) => `/images/${name}.jpg`;
 
 export const QUESTIONS: QuizQuestion[] = [
   // ─── Q1: MOOD ───────────────────────────────────────────────────────────
@@ -19,7 +17,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Comedy, satire, and lighthearted fun.",
         icon: "sentiment_very_satisfied",
         cardClass: "aspect-[4/3]",
-        bgImage: PIC("cinema-comedy"),
+        bgImages: [IMG("comedy-1"), IMG("comedy-2")],
         emoji: "😂",
       },
       {
@@ -28,7 +26,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Touching dramas and heart-wrenching stories.",
         icon: "heart_broken",
         cardClass: "aspect-[4/3]",
-        bgImage: PIC("cinema-drama"),
+        bgImages: [IMG("drama-1"), IMG("drama-2")],
         emoji: "😢",
       },
       {
@@ -37,7 +35,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Suspense, action, and heart-pounding mystery.",
         icon: "bolt",
         cardClass: "aspect-[4/3] md:col-span-2 lg:col-span-1",
-        bgImage: PIC("cinema-thriller"),
+        bgImages: [IMG("thriller-1"), IMG("thriller-2")],
         emoji: "😱",
       },
       {
@@ -46,7 +44,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Feel-good movies and cozy visual journeys.",
         icon: "spa",
         cardClass: "aspect-[16/9] md:col-span-2",
-        bgImage: PIC("cinema-relax"),
+        bgImages: [IMG("relax-1"), IMG("relax-2")],
         emoji: "😌",
       },
       {
@@ -55,7 +53,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Thought-provoking documentaries and complex indies.",
         icon: "psychology",
         cardClass: "aspect-[1/1]",
-        bgImage: PIC("cinema-abstract"),
+        bgImages: [IMG("think-1"), IMG("think-2")],
         emoji: "🧠",
       },
     ],
@@ -75,7 +73,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "A personal cinematic retreat.",
         icon: "person",
         cardClass: "aspect-[16/9]",
-        bgImage: PIC("cinema-solo"),
+        bgImages: [IMG("solo-1"), IMG("solo-2")],
         emoji: "🧑",
       },
       {
@@ -84,7 +82,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Something for the two of you.",
         icon: "favorite",
         cardClass: "aspect-[16/9]",
-        bgImage: PIC("cinema-romance"),
+        bgImages: [IMG("romance-1"), IMG("romance-2")],
         emoji: "💕",
       },
       {
@@ -93,7 +91,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Universal, multi-generational picks.",
         icon: "family_restroom",
         cardClass: "aspect-[16/9]",
-        bgImage: PIC("cinema-family"),
+        bgImages: [IMG("family-1"), IMG("family-2")],
         emoji: "👨‍👩‍👧",
       },
       {
@@ -102,7 +100,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Group watching, energetic vibe.",
         icon: "groups",
         cardClass: "aspect-[16/9]",
-        bgImage: PIC("cinema-friends"),
+        bgImages: [IMG("friends-1"), IMG("friends-2")],
         emoji: "🍻",
       },
     ],
@@ -122,7 +120,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Quick and punchy.",
         icon: "timer",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-short"),
+        bgImages: [IMG("short-1"), IMG("short-2")],
         emoji: "⚡",
       },
       {
@@ -131,7 +129,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "The classic runtime.",
         icon: "schedule",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-medium"),
+        bgImages: [IMG("balanced-1"), IMG("cinema-1")],
         emoji: "🎬",
       },
       {
@@ -140,7 +138,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Epic journeys welcome.",
         icon: "hourglass_top",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-epic"),
+        bgImages: [IMG("long-1"), IMG("long-2")],
         emoji: "🍿",
       },
       {
@@ -149,7 +147,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Surprise me with length.",
         icon: "all_inclusive",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-any"),
+        bgImages: [IMG("random-1"), IMG("random-2")],
         emoji: "🤷",
       },
     ],
@@ -169,7 +167,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Easy to watch, uplifting.",
         icon: "air",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-light"),
+        bgImages: [IMG("light-1"), IMG("light-2")],
         emoji: "🌤",
       },
       {
@@ -178,7 +176,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "A thoughtful middle ground.",
         icon: "balance",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-balanced"),
+        bgImages: [IMG("balanced-1"), IMG("cinema-1")],
         emoji: "⚖️",
       },
       {
@@ -187,7 +185,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Complex, emotionally dense.",
         icon: "waves",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-heavy"),
+        bgImages: [IMG("heavy-1"), IMG("heavy-2")],
         emoji: "🌑",
       },
     ],
@@ -207,7 +205,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Pre-2000 masterpieces.",
         icon: "history_edu",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-classic"),
+        bgImages: [IMG("classic-1"), IMG("classic-2")],
         emoji: "📽",
       },
       {
@@ -216,7 +214,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "2000 – 2015 era.",
         icon: "movie",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-modern"),
+        bgImages: [IMG("modern-1"), IMG("modern-2")],
         emoji: "📺",
       },
       {
@@ -225,7 +223,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "2016 and newer.",
         icon: "auto_awesome",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-recent"),
+        bgImages: [IMG("recent-1"), IMG("recent-2")],
         emoji: "✨",
       },
       {
@@ -234,7 +232,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Any era works.",
         icon: "all_inclusive",
         cardClass: "aspect-[3/4]",
-        bgImage: PIC("cinema-timeless"),
+        bgImages: [IMG("random-1"), IMG("think-2")],
         emoji: "🤷",
       },
     ],
@@ -254,7 +252,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Critically loved, well-known.",
         icon: "star",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-acclaimed"),
+        bgImages: [IMG("acclaimed-1"), IMG("acclaimed-2")],
         emoji: "🏆",
       },
       {
@@ -263,7 +261,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Under-the-radar brilliance.",
         icon: "diamond",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-gem"),
+        bgImages: [IMG("gem-1"), IMG("gem-2")],
         emoji: "💎",
       },
       {
@@ -272,7 +270,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Fun over prestige.",
         icon: "local_fire_department",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-guilty"),
+        bgImages: [IMG("guilty-1"), IMG("guilty-2")],
         emoji: "🙈",
       },
       {
@@ -281,7 +279,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "The Curator chooses.",
         icon: "shuffle",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-surprise"),
+        bgImages: [IMG("random-1"), IMG("random-2")],
         emoji: "🎲",
       },
     ],
@@ -301,7 +299,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Big screen experience.",
         icon: "theaters",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-theater"),
+        bgImages: [IMG("cinema-1"), IMG("cinema-2")],
         emoji: "🎭",
       },
       {
@@ -310,7 +308,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Couch and surround sound.",
         icon: "tv",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-home-tv"),
+        bgImages: [IMG("tv-1"), IMG("tv-2")],
         emoji: "📺",
       },
       {
@@ -319,7 +317,7 @@ export const QUESTIONS: QuizQuestion[] = [
         sub: "Intimate, close viewing.",
         icon: "smartphone",
         cardClass: "aspect-[4/5]",
-        bgImage: PIC("cinema-mobile"),
+        bgImages: [IMG("mobile-1"), IMG("mobile-2")],
         emoji: "🛋",
       },
     ],
@@ -339,7 +337,7 @@ export const QUESTIONS: QuizQuestion[] = [
         label: "Horror",
         icon: "skull",
         cardClass: "",
-        bgImage: PIC("dark-horror"),
+        bgImages: [IMG("horror-1"), IMG("horror-2")],
         emoji: "👻",
       },
       {
@@ -347,7 +345,7 @@ export const QUESTIONS: QuizQuestion[] = [
         label: "Romance",
         icon: "favorite",
         cardClass: "",
-        bgImage: PIC("dark-romance"),
+        bgImages: [IMG("romance-1"), IMG("romance-2")],
         emoji: "💝",
       },
       {
@@ -355,7 +353,7 @@ export const QUESTIONS: QuizQuestion[] = [
         label: "Animation",
         icon: "draw",
         cardClass: "md:row-span-2",
-        bgImage: PIC("dark-animation"),
+        bgImages: [IMG("anim-1"), IMG("anim-2")],
         emoji: "🎨",
       },
       {
@@ -363,7 +361,7 @@ export const QUESTIONS: QuizQuestion[] = [
         label: "Documentary",
         icon: "movie_filter",
         cardClass: "",
-        bgImage: PIC("dark-documentary"),
+        bgImages: [IMG("docu-1"), IMG("docu-2")],
         emoji: "🎙",
       },
       {
@@ -371,7 +369,7 @@ export const QUESTIONS: QuizQuestion[] = [
         label: "Sci-Fi",
         icon: "rocket_launch",
         cardClass: "",
-        bgImage: PIC("dark-scifi"),
+        bgImages: [IMG("scifi-1"), IMG("scifi-2")],
         emoji: "🚀",
       },
       {
@@ -379,7 +377,7 @@ export const QUESTIONS: QuizQuestion[] = [
         label: "Musical",
         icon: "music_note",
         cardClass: "",
-        bgImage: PIC("dark-musical"),
+        bgImages: [IMG("musical-1"), IMG("musical-2")],
         emoji: "🎵",
       },
     ],

@@ -16,14 +16,14 @@ const SLIDE = {
   exit: (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
 };
 
-// Stable cinema background
-const CINEMA_BG = "https://picsum.photos/seed/cinema-noir-bg/1920/1080";
+const QUIZ_BGS = ["/images/hero-1.jpg", "/images/quiz-bg.jpg"];
 
 export default function QuizShell() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [answers, setAnswers] = useState<PartialAnswers>({});
+  const [quizBg] = useState(() => QUIZ_BGS[Math.floor(Math.random() * QUIZ_BGS.length)]);
 
   const question = QUESTIONS[step];
   const stepNum = step + 1;
@@ -77,7 +77,7 @@ export default function QuizShell() {
       <div className="fixed inset-0 -z-10 opacity-40 pointer-events-none">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={CINEMA_BG}
+          src={quizBg}
           alt=""
           className="w-full h-full object-cover"
         />

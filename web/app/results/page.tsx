@@ -1,11 +1,13 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { QuizAnswers, Recommendation, ClaudeMessage } from "@/types";
 import MovieCard from "@/components/results/MovieCard";
 import ProfileSummary from "@/components/results/ProfileSummary";
 import ChatFollowUp, { ChatThread } from "@/components/results/ChatFollowUp";
+import { useAuth } from "@/contexts/AuthContext";
+import { addHistoryEntry } from "@/lib/auth";
 
 interface ChatEntry {
   role: "user" | "assistant";
@@ -81,6 +83,7 @@ function ErrorScreen({ message, onRetry }: { message: string; onRetry: () => voi
 function ResultsContent() {
   const params = useSearchParams();
   const router = useRouter();
+  const { account } = useAuth();
 
   const [answers, setAnswers] = useState<QuizAnswers | null>(null);
   const [recs, setRecs] = useState<Recommendation[]>([]);
@@ -89,6 +92,7 @@ function ResultsContent() {
   const [thread, setThread] = useState<ChatEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchedRef = useRef(false);
 
   function fetchRecommendations(parsed: QuizAnswers) {
     setLoading(true);
@@ -107,12 +111,21 @@ function ResultsContent() {
         setRecs(data.recommendations);
         setClosing(data.closing);
         setChatHistory(data.chatHistory);
+        if (account) {
+          addHistoryEntry(account.id, {
+            answers: parsed,
+            recommendations: data.recommendations,
+            closing: data.closing,
+          });
+        }
       })
       .catch(() => setError("Could not fetch recommendations."))
       .finally(() => setLoading(false));
   }
 
   useEffect(() => {
+    if (fetchedRef.current) return;
+
     const raw = params.get("q");
     if (!raw) {
       router.replace("/quiz");
@@ -127,10 +140,11 @@ function ResultsContent() {
       return;
     }
 
+    fetchedRef.current = true;
     setAnswers(parsed);
     fetchRecommendations(parsed);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params, router]);
+  }, []);
 
   function handleNewRecs(
     newRecs: Recommendation[],

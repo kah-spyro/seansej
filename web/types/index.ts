@@ -52,8 +52,8 @@ export interface QuizOption {
   sub?: string;
   /** Tailwind classes for card size/aspect ratio */
   cardClass?: string;
-  /** Background image URL for cinematic card overlay */
-  bgImage?: string;
+  /** 2-3 local background images for cinematic card overlay — one is picked randomly on mount */
+  bgImages?: string[];
   /** Legacy emoji — kept for profile summary labels */
   emoji?: string;
 }

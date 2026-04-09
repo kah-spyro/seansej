@@ -1,8 +1,16 @@
-import Link from "next/link";
+"use client";
 
-const HERO_BG = "https://picsum.photos/seed/cinema-welcome-hero/1920/1080";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+
+const HERO_IMGS = ["/images/hero-1.jpg", "/images/hero-2.jpg"];
 
 export default function Home() {
+  const [heroBg, setHeroBg] = useState(HERO_IMGS[0]);
+  useEffect(() => {
+    setHeroBg(HERO_IMGS[Math.floor(Math.random() * HERO_IMGS.length)]);
+  }, []);
+
   return (
     <main>
       {/* ── Hero ── */}
@@ -11,7 +19,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={HERO_BG}
+            src={heroBg}
             alt=""
             className="w-full h-full object-cover"
           />
@@ -77,7 +85,7 @@ export default function Home() {
             <div className="absolute inset-0 opacity-40 group-hover:opacity-50 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://picsum.photos/seed/cinema-mood/1000/600"
+                src="/images/bento-mood.jpg"
                 alt=""
                 className="w-full h-full object-cover"
               />

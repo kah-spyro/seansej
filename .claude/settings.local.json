@@ -10,7 +10,8 @@
       "WebFetch(domain:player.pl)",
       "WebFetch(domain:polsatboxgo.pl)",
       "WebFetch(domain:canalplus.pl)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "WebFetch(domain:unsplash.com)"
     ]
   }
 }
